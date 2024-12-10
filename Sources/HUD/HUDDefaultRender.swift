@@ -31,8 +31,7 @@ struct HUDDefaultView: View {
         }
         .padding(20)
         .background(
-            Color.clear
-                .background(Material.thin)
+            VisualEffectView(effect: UIBlurEffect(style: .systemThinMaterial))
                 .background(colorScheme == .light ? Color.gray.opacity(0.1) : Color.white.opacity(0.1))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         )
@@ -58,5 +57,17 @@ struct HUDDefaultView: View {
         case .message:
             EmptyView()
         }
+    }
+}
+
+private struct VisualEffectView: UIViewRepresentable {
+    var effect: UIVisualEffect
+
+    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView {
+        UIVisualEffectView()
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) {
+        uiView.effect = effect
     }
 }

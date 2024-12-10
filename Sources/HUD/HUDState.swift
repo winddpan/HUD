@@ -9,6 +9,7 @@ public enum HUDIdentifier: Equatable {
 }
 
 public struct HUDState: Equatable {
+    let uuid: UUID
     public let identifier: HUDIdentifier
     public let title: String?
     public let caption: String?
@@ -22,6 +23,7 @@ public struct HUDState: Equatable {
                 preventTouch: Bool,
                 shouldAutoHide: Bool,
                 autoHideInterval: TimeInterval) {
+        self.uuid = UUID()
         self.identifier = identifier
         self.title = title
         self.caption = caption

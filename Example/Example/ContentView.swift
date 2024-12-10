@@ -13,6 +13,8 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
+            Color.clear
+            
             VStack(spacing: 20) {
                 Button("message") {
                     hudState = .message("this is title text", caption: "this is caption text")

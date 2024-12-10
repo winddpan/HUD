@@ -41,6 +41,7 @@ struct HUDView: View {
         Group {
             if visible, let playingHudState {
                 AnyView(hudRender.render(playingHudState))
+                    .id(playingHudState.uuid)
             }
         }
         .animation(.easeInOut, value: visible)
@@ -60,7 +61,6 @@ struct HUDView: View {
         guard hudState != playingHudState else {
             return
         }
-
         delayTask?.cancel()
         visible = true
         playingHudState = hudState
