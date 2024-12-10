@@ -1,11 +1,18 @@
-# Pure SwiftUI HUD
+# SwiftUI HUD
+iOS14+ macOS13+
 
+# Demo
+https://github.com/user-attachments/assets/7c741aa6-c9f7-45e7-96bb-31f266ccf063
+
+# Usage
 ```
 struct ContentView: View {
     @State var hudState: HUDState?
 
     var body: some View {
         ZStack {
+            Color.clear
+
             VStack(spacing: 20) {
                 Button("message") {
                     hudState = .message("this is title text", caption: "this is caption text")
