@@ -9,7 +9,7 @@ public enum HUDIdentifier: Equatable {
 }
 
 public struct HUDState: Equatable {
-    let uuid: UUID
+    public let uuid: String
     public let identifier: HUDIdentifier
     public let title: String?
     public let caption: String?
@@ -17,13 +17,16 @@ public struct HUDState: Equatable {
     public let shouldAutoHide: Bool
     public let autoHideInterval: TimeInterval
 
-    public init(identifier: HUDIdentifier,
-                title: String? = nil,
-                caption: String? = nil,
-                preventTouch: Bool,
-                shouldAutoHide: Bool,
-                autoHideInterval: TimeInterval) {
-        self.uuid = UUID()
+    public init(
+        uuid: String = UUID().uuidString,
+        identifier: HUDIdentifier,
+        title: String? = nil,
+        caption: String? = nil,
+        preventTouch: Bool,
+        shouldAutoHide: Bool,
+        autoHideInterval: TimeInterval
+    ) {
+        self.uuid = uuid
         self.identifier = identifier
         self.title = title
         self.caption = caption
@@ -33,46 +36,51 @@ public struct HUDState: Equatable {
     }
 }
 
-public extension HUDState {
-    static func loading(_ title: String? = nil, caption: String? = nil) -> Self {
-        HUDState(identifier: .loading,
-                 title: title,
-                 caption: caption,
-                 preventTouch: true,
-                 shouldAutoHide: false,
-                 autoHideInterval: 0)
+extension HUDState {
+    public static func loading(_ title: String? = nil, caption: String? = nil) -> Self {
+        HUDState(
+            uuid: "Loading\(title ?? "")",
+            identifier: .loading,
+            title: title,
+            caption: caption,
+            preventTouch: true,
+            shouldAutoHide: false,
+            autoHideInterval: 0)
     }
 
-    static func success(_ title: String? = nil, caption: String? = nil) -> Self {
-        HUDState(identifier: .success,
-                 title: title,
-                 caption: caption,
-                 preventTouch: false,
-                 shouldAutoHide: true,
-                 autoHideInterval: 2.5)
+    public static func success(_ title: String? = nil, caption: String? = nil) -> Self {
+        HUDState(
+            identifier: .success,
+            title: title,
+            caption: caption,
+            preventTouch: false,
+            shouldAutoHide: true,
+            autoHideInterval: 2.5)
     }
 
-    static func error(_ title: String? = nil, caption: String? = nil) -> Self {
-        HUDState(identifier: .error,
-                 title: title,
-                 caption: caption,
-                 preventTouch: false,
-                 shouldAutoHide: true,
-                 autoHideInterval: 2.5)
+    public static func error(_ title: String? = nil, caption: String? = nil) -> Self {
+        HUDState(
+            identifier: .error,
+            title: title,
+            caption: caption,
+            preventTouch: false,
+            shouldAutoHide: true,
+            autoHideInterval: 2.5)
     }
 
-    static func message(_ title: String, caption: String? = nil) -> Self {
-        HUDState(identifier: .message,
-                 title: title,
-                 caption: caption,
-                 preventTouch: false,
-                 shouldAutoHide: true,
-                 autoHideInterval: 2.5)
+    public static func message(_ title: String, caption: String? = nil) -> Self {
+        HUDState(
+            identifier: .message,
+            title: title,
+            caption: caption,
+            preventTouch: false,
+            shouldAutoHide: true,
+            autoHideInterval: 2.5)
     }
 }
 
-public extension View {
-    func overlayHUD(_ state: Binding<HUDState?>) -> some View {
+extension View {
+    public func overlayHUD(_ state: Binding<HUDState?>) -> some View {
         modifier(HUDModifier(hudState: state))
     }
 }
